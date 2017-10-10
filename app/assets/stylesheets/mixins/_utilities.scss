@@ -1,0 +1,87 @@
+.margin-none {
+  margin: 0;
+}
+
+.margin-bottom-xs {
+  margin-bottom: ceil($line-height-computed / 4);
+}
+
+.margin-bottom-sm {
+  margin-bottom: ceil($line-height-computed / 2);
+}
+
+.margin-bottom-md {
+  margin-bottom: $line-height-computed;
+}
+
+.margin-bottom-lg {
+  margin-bottom: ceil($line-height-computed * 2);
+}
+
+.margin-bottom-xl {
+  margin-bottom: ceil($line-height-computed * 3);
+}
+
+.margin-right-xs {
+  margin-right: ceil($line-height-computed / 4);
+}
+
+.margin-right-sm {
+  margin-right: ceil($line-height-computed / 2);
+}
+
+.margin-right-md {
+  margin-right: $line-height-computed;
+}
+
+.margin-right-lg {
+  margin-right: ceil($line-height-computed * 2);
+}
+
+.margin-right-xl {
+  margin-right: ceil($line-height-computed * 3);
+}
+
+.margin-top-xs {
+  margin-top: ceil($line-height-computed / 4);
+}
+
+.margin-top-sm {
+  margin-top: ceil($line-height-computed / 2);
+}
+
+.margin-top-md {
+  margin-top: $line-height-computed;
+}
+
+.margin-top-lg {
+  margin-top: ceil($line-height-computed * 2);
+}
+
+.margin-top-xl {
+  margin-top: ceil($line-height-computed * 3);
+}
+
+.block {
+  display: block;
+}
+
+.padding-left-xs {
+  padding-left: ceil($line-height-computed / 4);
+}
+
+.padding-left-sm {
+  padding-left: ceil($line-height-computed / 2);
+}
+
+.padding-left-md {
+  padding-left: $line-height-computed;
+}
+
+.padding-left-lg {
+  padding-left: ceil($line-height-computed * 2);
+}
+
+.padding-left-xl {
+  padding-left: ceil($line-height-computed * 3);
+}

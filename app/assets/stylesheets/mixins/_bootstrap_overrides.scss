@@ -1,0 +1,25 @@
+a, a:hover, a:focus {
+  text-decoration: none;
+}
+
+.btn-center {
+  width: 25%;
+  margin: 3rem auto 1rem auto;
+  display: block;
+}
+
+h1, h2, h3, .lead {
+  font-family: 'Josefina Sans', sans-serif;
+  text-transform: uppercase;
+  color: $gray-light;
+  margin-top: 2rem;
+}
+
+h1, h2, h3 {
+  font-weight: 300;
+  letter-spacing: .2rem;
+}
+
+hr {
+  padding: 1rem 0;
+}
