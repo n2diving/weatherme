@@ -7,3 +7,23 @@
 @import "mixins/browser_overrides";
 @import "mixins/text_styling";
 @import "mixins/utilities";
+
+
+
+
+.image-overlay {
+  position: relative;
+  width: 100%;
+
+  .weather-icon {
+    opacity: .2;
+    width: 60%;
+  }
+
+  .weather-description {
+    position: absolute;
+    top: 1rem;
+    right: 15%;
+    left: 15%;
+  }
+}

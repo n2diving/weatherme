@@ -32,26 +32,25 @@ class ForecastsController < ApplicationController
       location = response['city']['name']
       weather = response["list"][0]["weather"][0]["description"]
       @results = "Looks like it's going to be #{weather} in #{location} today."
-      @main = get_image(response["list"][0]["weather"][0]["description"])
+      @image = get_image(response["list"][0]["weather"][0]["description"])
     end
 
   end
 
   def get_image(forecast)
     case forecast
-      when /[a-zA-Z]+/
-        search_query = "q=#{params[:search]}"
-      when /^-?\d+\.*\d+\,\s?-?\d+\.*\d+$/
-        split = params[:search].split(',')
-        lat = split[0]
-        lon = split[1]
-        search_query = "lat=#{lat}&lon=#{lon}"
-      when /[0-9]{5}/
-        search_query = "zip=#{params[:search]},us"
-      when /[0-9]+/
-        search_query = "id=#{params[:search]}"
+      when /clear/ || /sun/
+        return "clear.svg"
+      when /lightning/ || /thunder/
+        return "thunder.svg"
+      when /part/ || /broken/
+        return "partly.svg"
+      when /cloud/
+        return "cloud.svg"
+      when /rain/ || /sleet/
+        return "rain.svg"
       else
-        flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates????"
+        return "vane.svg"
     end
 
   end

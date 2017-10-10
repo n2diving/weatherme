@@ -7,6 +7,8 @@ things left to do:
 
 * refactor/cleanup forecast index action to abstract case statement and make search function reusable on other pages
 
+* ajaxify form submit and clean input on submission
+
 * cleanup/color images, use inline svg so image color can be customized based on client choice or theme
 
 * add a weather layer map as the background image

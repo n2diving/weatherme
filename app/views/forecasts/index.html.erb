@@ -9,5 +9,8 @@
       <% end %>
     </div>
   </div>
-  <p class="margin-top-lg"><%= @results %></p>
+  <div class="image-overlay margin-top-md">
+    <%= image_tag @image, class: 'weather-icon' %>
+    <p class="margin-top-lg weather-description"><%= @results %></p>
+  </div>
 </div>
