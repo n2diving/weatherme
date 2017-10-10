@@ -5,6 +5,8 @@
 
 things left to do:
 
+* figure out why toastr works locally but not on heroku
+
 * refactor/cleanup forecast index action to abstract case statement and make search function reusable on other pages
 
 * ajaxify form submit and clean input on submission
