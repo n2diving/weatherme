@@ -27,7 +27,7 @@ class ForecastsController < ApplicationController
       response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?#{search_query}&APPID=#{api_id}")
 
 
-      if response && response['cod'] == '400'
+      if response['cod'] == '400'
         flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates???"
       elsif response && response['cod'] == '200'
         location = response['city']['name']
