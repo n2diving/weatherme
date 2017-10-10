@@ -20,14 +20,15 @@ class ForecastsController < ApplicationController
           search_query = "zip=#{params[:search]},us"
         when /[0-9]+/
           search_query = "id=#{params[:search]}"
+        else
+          # flash.now[:notice] = "Congrats...you have managed to break the internet"
       end
 
-      puts search_query
       response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?#{search_query}&APPID=#{api_id}")
-      puts response
 
       if response['cod'] == '400'
-        flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates???"
+        flash.now[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates???"
+
       elsif response && response['cod'] == '200'
         location = response['city']['name']
         weather = response["list"][0]["weather"][0]["description"]
