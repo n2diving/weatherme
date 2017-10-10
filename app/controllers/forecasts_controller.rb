@@ -5,35 +5,39 @@ class ForecastsController < ApplicationController
   # GET /forecasts.json
   def index
     @forecasts = Forecast.where('created_at > ?' , Time.now - 24.hours)
+    @image = ''
+
+    if params[:search]
+      case params[:search]
+        when /[a-zA-Z]+/
+          search_query = "q=#{params[:search]}"
+        when /^-?\d+\.*\d+\,\s?-?\d+\.*\d+$/
+          split = params[:search].split(',')
+          lat = split[0]
+          lon = split[1]
+          search_query = "lat=#{lat}&lon=#{lon}"
+        when /[0-9]{5}/
+          search_query = "zip=#{params[:search]},us"
+        when /[0-9]+/
+          search_query = "id=#{params[:search]}"
+        else
+          # flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates????"
+      end
+
+      response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?#{search_query}&APPID=#{api_id}")
 
 
-    case params[:search]
-      when /[a-zA-Z]+/
-        search_query = "q=#{params[:search]}"
-      when /^-?\d+\.*\d+\,\s?-?\d+\.*\d+$/
-        split = params[:search].split(',')
-        lat = split[0]
-        lon = split[1]
-        search_query = "lat=#{lat}&lon=#{lon}"
-      when /[0-9]{5}/
-        search_query = "zip=#{params[:search]},us"
-      when /[0-9]+/
-        search_query = "id=#{params[:search]}"
+      if response && response['cod'] == '400'
+        flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates???"
       else
-        flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates????"
+        location = response['city']['name']
+        weather = response["list"][0]["weather"][0]["description"]
+        @results = "Looks like it's going to be #{weather} in #{location} today."
+        @image = get_image(response["list"][0]["weather"][0]["description"])
+      end
     end
 
-    response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?#{search_query}&APPID=#{api_id}")
 
-
-    if response.nil? || response.message == 'Not Found'
-      flash[:notice] = "Congrats...you have managed to break the internet"
-    else
-      location = response['city']['name']
-      weather = response["list"][0]["weather"][0]["description"]
-      @results = "Looks like it's going to be #{weather} in #{location} today."
-      @image = get_image(response["list"][0]["weather"][0]["description"])
-    end
 
   end
 
