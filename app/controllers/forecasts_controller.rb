@@ -26,7 +26,7 @@ class ForecastsController < ApplicationController
     response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?#{search_query}&APPID=#{api_id}")
 
 
-    if response.message == 'Not Found'
+    if response.nil? || response.message == 'Not Found'
       flash[:notice] = "Congrats...you have managed to break the internet"
     else
       location = response['city']['name']
