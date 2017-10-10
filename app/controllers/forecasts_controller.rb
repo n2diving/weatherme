@@ -29,7 +29,7 @@ class ForecastsController < ApplicationController
 
       if response && response['cod'] == '400'
         flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates???"
-      else
+      elsif response && response['cod'] == '200'
         location = response['city']['name']
         weather = response["list"][0]["weather"][0]["description"]
         @results = "Looks like it's going to be #{weather} in #{location} today."
