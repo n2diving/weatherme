@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+####weatherme...
+#####a sample weather forecasting app
 
-Things you may want to cover:
+things left to do:
 
-* Ruby version
+* refactor/cleanup forecast index action to abstract case statement and make search function reusable on other pages
 
-* System dependencies
+* cleanup/color images, use inline svg so image color can be customized based on client choice or theme
 
-* Configuration
+* add a weather layer map as the background image
 
-* Database creation
+* add basic lists of the last few forecasts ran, clickable so they return new results for same search criteria
 
-* Database initialization
+* behavior testing/make sure all the search options return results
 
-* How to run the test suite
+* add additional information from forecast retrieval...more dates, more information, better UI
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* explore dark sky api, maybe toggle different weather results

@@ -4,17 +4,62 @@ class ForecastsController < ApplicationController
   # GET /forecasts
   # GET /forecasts.json
   def index
-    @forecasts = Forecast.all
+    @forecasts = Forecast.where('created_at > ?' , Time.now - 24.hours)
+
+
+    case params[:search]
+      when /[a-zA-Z]+/
+        search_query = "q=#{params[:search]}"
+      when /^-?\d+\.*\d+\,\s?-?\d+\.*\d+$/
+        split = params[:search].split(',')
+        lat = split[0]
+        lon = split[1]
+        search_query = "lat=#{lat}&lon=#{lon}"
+      when /[0-9]{5}/
+        search_query = "zip=#{params[:search]},us"
+      when /[0-9]+/
+        search_query = "id=#{params[:search]}"
+      else
+        flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates????"
+    end
+
+    response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?#{search_query}&APPID=#{api_id}")
+
+
+    if response.message == 'Not Found'
+      flash[:notice] = "Congrats...you have managed to break the internet"
+    else
+      location = response['city']['name']
+      weather = response["list"][0]["weather"][0]["description"]
+      @results = "Looks like it's going to be #{weather} in #{location} today."
+      @main = get_image(response["list"][0]["weather"][0]["description"])
+    end
+
+  end
+
+  def get_image(forecast)
+    case forecast
+      when /[a-zA-Z]+/
+        search_query = "q=#{params[:search]}"
+      when /^-?\d+\.*\d+\,\s?-?\d+\.*\d+$/
+        split = params[:search].split(',')
+        lat = split[0]
+        lon = split[1]
+        search_query = "lat=#{lat}&lon=#{lon}"
+      when /[0-9]{5}/
+        search_query = "zip=#{params[:search]},us"
+      when /[0-9]+/
+        search_query = "id=#{params[:search]}"
+      else
+        flash[:error] = "Well this is embarrassing I can't find your town...maybe try coordinates????"
+    end
+
   end
 
   # GET /forecasts/1
   # GET /forecasts/1.json
   def show
-    city_id = params[:city_id]
-    app_id = ENV['OPEN_WEATHER_API_KEY']
-    response = HTTParty.get("http://api.openweathermap.org/data/2.5/forecast?id=#{city_id}&APPID=#{app_id}")
 
-    puts response.body, response.code, response.message, response.headers.inspect
   end
 
   # GET /forecasts/new
@@ -75,5 +120,9 @@ class ForecastsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def forecast_params
       params.fetch(:forecast, {})
+    end
+
+    def api_id
+      ENV['OPEN_WEATHER_API_KEY']
     end
 end
